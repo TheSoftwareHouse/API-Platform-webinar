@@ -1,0 +1,33 @@
+# Example yaml serialization
+App\Entity\Person:
+    attributes:
+        id:
+            groups: ['person_single_get', 'people_list']
+        familyName:
+            groups: ['person_single_get', 'project_summary', 'people_list']
+        givenName:
+            groups: ['person_single_get', 'project_summary', 'people_list']
+        birthDate:
+            groups: ['person_single_get']
+        telephone:
+            groups: ['person_single_get']
+        email:
+            groups: ['person_single_get']
+        jobTitle:
+            groups: ['person_single_get', 'project_summary', 'people_list']
+        roles:
+            groups: ['person_single_get']
+        hasOccupations:
+            groups: ['person_single_get']
+
+App\Entity\Role:
+    attributes:
+        roleName:
+            groups: ['person_single_get']
+
+App\Entity\QuantitativeValue:
+    attributes:
+        minValue:
+            groups: ['person_single_get', 'project_summary']
+        maxValue:
+            groups: ['person_single_get', 'project_summary']

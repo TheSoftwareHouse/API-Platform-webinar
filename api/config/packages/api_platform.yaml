@@ -1,0 +1,14 @@
+api_platform:
+    mapping:
+        paths: ['%kernel.project_dir%/src/Entity']
+    title: API Platform Webinar
+    version: 0.1.0
+    path_segment_name_generator: api_platform.path_segment_name_generator.dash
+
+    formats:
+        jsonld:   ['application/ld+json']
+        jsonhal:  ['application/hal+json']
+        json:     ['application/json']
+        xml:      ['application/xml', 'text/xml']
+        yaml:     ['application/yaml', 'text/yaml']
+        html:     ['text/html']

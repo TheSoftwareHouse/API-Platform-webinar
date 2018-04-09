@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+    php:
+        build:
+            context: ./api
+        depends_on:
+            - db
+        env_file:
+            - ./api/.env
+        # Comment out these volumes in production
+        volumes:
+            - ./api:/srv/api:rw,cached
+            # If you develop on Linux, comment out the following volumes to just use bind-mounted project directory from host
+            - /srv/api/var/
+            - /srv/api/var/cache/
+            - /srv/api/var/logs/
+            - /srv/api/var/sessions/
+
+    api:
+        build:
+            context: ./api
+            dockerfile: ./Dockerfile.nginx
+        depends_on:
+            - php
+        ports:
+            - "8080:80"
+        volumes:
+            - ./api/public:/srv/api/public:ro
+
+    db:
+        # In production, you may want to use a managed database service
+        image: postgres:9.6-alpine
+        environment:
+            - POSTGRES_DB=api
+            - POSTGRES_USER=api-platform
+            # You should definitely change the password in production
+            - POSTGRES_PASSWORD=!ChangeMe!
+        volumes:
+            - db-data:/var/lib/postgresql/data:rw
+            # You may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
+            # - ./docker/db/data:/var/lib/postgresql/data:rw
+        ports:
+            - "5432:5432"
+
+volumes:
+    db-data: {}

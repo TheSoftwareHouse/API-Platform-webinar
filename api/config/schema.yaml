@@ -1,0 +1,75 @@
+types:
+    SoftwareApplication:
+        parent: false
+        properties:
+            name:
+                range: Text
+                groups: ['project_summary', 'project_detail']
+            description:
+                range: Text
+            identifier:
+                range: Text
+                groups: ['project_summary', 'project_detail']
+            featureList:
+                range: Text
+                groups: ['project_detail']
+            applicationCategory:
+                range: Text
+                groups: ['project_detail']
+            author:
+                cardinality: "(*..*)"
+                range: Person
+                relationTableName: software_application_author
+                groups: ['project_summary']
+            accountablePerson:
+                cardinality: "(*..*)"
+                range: Person
+                relationTableName: software_application_accountable_person
+                groups: ['project_summary']
+
+    QuantitativeValue:
+        parent: false
+        properties:
+            minValue:
+                range: Number
+                groups: ['person_single_get', 'project_summary']
+            maxValue:
+                range: Number
+                groups: ['person_single_get', 'project_summary']
+
+    Person:
+        parent: false
+        properties:
+            familyName:
+                groups: ['person_single_get', 'project_summary', 'people_list']
+            givenName:
+                groups: ['person_single_get', 'project_summary', 'people_list']
+            birthDate:
+                groups: ['person_single_get']
+            telephone:
+                groups: ['person_single_get']
+            email:
+                unique: true
+                groups: ['person_single_get', 'person_write']
+            jobTitle:
+                groups: ['person_single_get', 'project_summary', 'people_list', 'person_write']
+            hasOccupation:
+                range: Role
+                cardinality: "(*..*)"
+                groups: ['person_single_get']
+            rates:
+                range: QuantitativeValue
+                cardinality: "(*..*)"
+                groups: ['person_single_get', 'person_write']
+    Role:
+        parent: false
+        properties:
+            identifier:
+                range: Text
+                unique: true
+            roleName:
+                range: Text
+                nullable: false
+                groups: ['person_single_get']
+
+
