@@ -4,9 +4,13 @@ declare(strict_types=1);
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Annotation\ApiSubresource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -31,6 +35,9 @@ use Symfony\Component\Validator\Constraints as Assert;
  *     }
  * )
  * @UniqueEntity("email")
+ * @ApiFilter(DateFilter::class, properties={"birthDate"})
+ * @ApiFilter(SearchFilter::class, properties={"familyName": "partial", "givenName": "partial", "email":"exact", "jobTitle":"exact"})
+ * @ApiFilter(OrderFilter::class, properties={"id", "familyName", "givenName", "email"})
  */
 class Person
 {
